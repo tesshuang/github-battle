@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { fetchPopular } from '../utils/fetchPopular'
 
 function LanguageNav({ selected, onUpdateLanguage}) {
   const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python']
@@ -30,8 +31,11 @@ export default class Popular extends React.Component {
     super(props);
 
     this.state = {
-      selectedLanguage: 'All'
+      selectedLanguage: 'All',
+      repo: null,
+      error: null,
     }
+
     this.updateLanguage = this.updateLanguage.bind(this);
   }
 
@@ -40,9 +44,25 @@ export default class Popular extends React.Component {
     this.setState({
       selectedLanguage
     })
+
+    fetchPopular(selectedLanguage)
+    .then((repo) => {
+      console.log(repo);
+      this.setState({
+        repo,
+        error: null
+      })
+    })
+    .catch((err) => {
+      console.log('Error fetching data: ', err);
+      this.setState({
+        error: 'There is an error fetching data.'
+      })
+    })
   }
+
   render() {
-    const { selectedLanguage } = this.state;
+    const { selectedLanguage, repo, error } = this.state;
 
     return(
       <React.Fragment>
@@ -50,6 +70,8 @@ export default class Popular extends React.Component {
           selected={selectedLanguage}
           onUpdateLanguage={this.updateLanguage}
         />
+
+      {repo && <pre>{JSON.stringify(repo, null, 2)}</pre>}
       </React.Fragment>
     )
   }
