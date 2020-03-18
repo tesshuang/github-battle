@@ -32,7 +32,7 @@ export default class Popular extends React.Component {
 
     this.state = {
       selectedLanguage: 'All',
-      repo: null,
+      repo: {},
       error: null,
     }
 
@@ -43,35 +43,47 @@ export default class Popular extends React.Component {
     this.updateLanguage(this.state.selectedLanguage);
   }
   updateLanguage(selectedLanguage) {
-    console.log(selectedLanguage);
+    // console.log(selectedLanguage);
     this.setState({
       selectedLanguage,
       error: null,
-      repo: null
     })
-    // if (!this.state)
-    fetchPopular(selectedLanguage)
-      .then((repo) => {
-        console.log(repo);
-        this.setState({
-          repo,
-          error: null
+
+    if (!this.state.repo[selectedLanguage]) {
+      fetchPopular(selectedLanguage)
+        .then((data) => this.setState(({repo}) => ({
+          repo: {
+            ...repo,
+            [selectedLanguage]: data,
+          }
+        }))
+        )
+        .catch((err) => {
+          console.log('Error fetching data: ', err);
+          this.setState({
+            error: 'There is an error fetching data.'
+          })
         })
-      })
-      .catch((err) => {
-        console.log('Error fetching data: ', err);
-        this.setState({
-          error: 'There is an error fetching data.'
-        })
-      })
+    }
+    // fetchPopular(selectedLanguage)
+    //   .then((repo) => {
+    //     console.log(repo);
+    //     this.setState({
+    //       repo,
+    //       error: null
+    //     })
+    //   })
+
   }
   isLoading() {
-    return this.state.repo === null && this.state.error === null
+    const { selectedLanguage, repo, error } = this.state;
+
+    return !repo[selectedLanguage] && error === null
   }
 
   render() {
     const { selectedLanguage, repo, error } = this.state;
-    console.log(this.state.repo);
+    console.log(repo[selectedLanguage]);
     return(
       <React.Fragment>
         <LanguageNav 
@@ -80,7 +92,7 @@ export default class Popular extends React.Component {
         />
         {this.isLoading() && <p>Loading...</p>}
         {error && <p>{error}</p>}
-        {repo && <pre>{JSON.stringify(repo, null, 2)}</pre>}
+        {repo[selectedLanguage] && <pre>{JSON.stringify(repo[selectedLanguage], null, 2)}</pre>}
       </React.Fragment>
     )
   }
