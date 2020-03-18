@@ -8,7 +8,7 @@ export function fetchPopular(language) {
     return fetch(endpoint)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (!data.items) {
           throw new Error(data.message)
         }
