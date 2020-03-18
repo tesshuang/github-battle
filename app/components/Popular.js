@@ -40,14 +40,16 @@ export default class Popular extends React.Component {
     this.isLoading = this.isLoading.bind(this);
   }
   componentDidMount() {
-    this.updateLanguage();
+    this.updateLanguage(this.state.selectedLanguage);
   }
   updateLanguage(selectedLanguage) {
     console.log(selectedLanguage);
     this.setState({
-      selectedLanguage
+      selectedLanguage,
+      error: null,
+      repo: null
     })
-
+    // if (!this.state)
     fetchPopular(selectedLanguage)
       .then((repo) => {
         console.log(repo);
