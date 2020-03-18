@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import NavBar from './components/NavBar'
+import Popular from './components/Popular'
 import './index.css'
 
 class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <NavBar />
+        <Popular />
       </div>
     )
   }

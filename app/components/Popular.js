@@ -25,7 +25,7 @@ LanguageNav.propTypes = {
   onUpdateLanguage: PropTypes.func.isRequired
 }
 
-export default class NavBar extends React.Component {
+export default class Popular extends React.Component {
   constructor(props) {
     super(props);
 
