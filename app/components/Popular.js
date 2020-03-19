@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { fetchPopular } from '../utils/fetchPopular'
-import { FaUser } from "react-icons/fa"
+import { FaUser, FaStar, FaCodeBranch, FaExclamationCircle, FaCode } from "react-icons/fa"
 
 
 function LanguageNav({ selected, onUpdateLanguage}) {
@@ -31,27 +31,35 @@ LanguageNav.propTypes = {
 function RepoGrid({repos}) {
 
  return(
-    <ul>
+    <ul className="grid space-around">
       {repos.map((repo, index) => {
          const { name, owner, html_url, stargazers_count, fork, open_issues_count } = repo;
          const { login, avatar_url } = owner;
         return (
-          <li key={html_url}>
-            <p>#{index + 1}</p>
-            <img src={avatar_url} alt="Avatar" />
-            <h4>{name}</h4>
-            <ul>
+          <li key={html_url} className="card">
+            <h4 className="header-lg center-text">#{index + 1}</h4>
+            <img className="avatar" src={avatar_url} alt="Avatar" />
+            <h2 className="center-text">
+              <a className="link" href={html_url}>{name}</a>
+            </h2>
+            <ul className="card-list">
               <li>
-                {login}
+                <FaUser color="orange" size={22} />
+                <a href={html_url}>
+                  {login}
+                </a>
               </li>
               <li>
-                {stargazers_count} stars
+                <FaStar color="yellow" size={22} />
+                <span>{stargazers_count} stars</span>
               </li>
               <li>
-                {fork} forks
+                <FaCodeBranch color="blue" size={22} />
+                <span>{fork} forks</span>
               </li>
               <li>
-                {open_issues_count} issues
+                <FaExclamationCircle color="pink" size={22} />
+                <span>{open_issues_count} issues</span>
               </li>
             </ul>
           </li>
