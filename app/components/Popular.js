@@ -65,14 +65,6 @@ export default class Popular extends React.Component {
           })
         })
     }
-    // fetchPopular(selectedLanguage)
-    //   .then((repo) => {
-    //     console.log(repo);
-    //     this.setState({
-    //       repo,
-    //       error: null
-    //     })
-    //   })
 
   }
   isLoading() {
