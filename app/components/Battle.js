@@ -38,7 +38,8 @@ class PlayerInput extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.onSubmit(this.state.value);
+
+    this.props.onSubmit(this.state.username);
   }
 
   handleChange(e) {
@@ -50,9 +51,9 @@ class PlayerInput extends React.Component {
     return(
       <form className="column player" onSubmit={this.handleSubmit}>
         <label className='player-lable' htmlFor='username'>
-         {this.props.label}
+         {this.props.lable}
         </label>
-        <div>
+        <div className="row">
           <input 
             type='text'
             id='username'
@@ -62,7 +63,7 @@ class PlayerInput extends React.Component {
             onChange={this.handleChange}
           />
           <button
-            className='btn btn-dark'
+            className='btn dark-btn'
             type='submit'
             disabled={!this.state.username}
           >
@@ -84,7 +85,7 @@ export default class Battle extends React.Component {
     return(
       <React.Fragment>
         <Instruction />
-        <PlayerInput label='Label' onSubmit={()=>{}}/>
+        <PlayerInput lable='Lable' onSubmit={(e)=>{console.log(e)}}/>
       </React.Fragment>
     )
   }
