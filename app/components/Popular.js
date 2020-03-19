@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { fetchPopular } from '../utils/fetchPopular'
+import { FaUser } from "react-icons/fa"
+
 
 function LanguageNav({ selected, onUpdateLanguage}) {
   const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python']
@@ -26,6 +28,42 @@ LanguageNav.propTypes = {
   onUpdateLanguage: PropTypes.func.isRequired
 }
 
+function RepoGrid({repos}) {
+
+ return(
+    <ul>
+      {repos.map((repo, index) => {
+         const { name, owner, html_url, stargazers_count, fork, open_issues_count } = repo;
+         const { login, avatar_url } = owner;
+        return (
+          <li key={html_url}>
+            <p>#{index + 1}</p>
+            <img src={avatar_url} alt="Avatar" />
+            <h4>{name}</h4>
+            <ul>
+              <li>
+                {login}
+              </li>
+              <li>
+                {stargazers_count} stars
+              </li>
+              <li>
+                {fork} forks
+              </li>
+              <li>
+                {open_issues_count} issues
+              </li>
+            </ul>
+          </li>
+        )
+      })}
+    </ul>
+ )
+}
+
+RepoGrid.protoTypes = {
+  repos: PropTypes.array.isRequired
+}
 export default class Popular extends React.Component {
   constructor(props) {
     super(props);
@@ -75,7 +113,7 @@ export default class Popular extends React.Component {
 
   render() {
     const { selectedLanguage, repo, error } = this.state;
-    console.log(repo[selectedLanguage]);
+    // console.log(repo[selectedLanguage]);
     return(
       <React.Fragment>
         <LanguageNav 
@@ -84,7 +122,7 @@ export default class Popular extends React.Component {
         />
         {this.isLoading() && <p>Loading...</p>}
         {error && <p>{error}</p>}
-        {repo[selectedLanguage] && <pre>{JSON.stringify(repo[selectedLanguage], null, 2)}</pre>}
+        {repo[selectedLanguage] && <RepoGrid repos={repo[selectedLanguage]}/>}
       </React.Fragment>
     )
   }
