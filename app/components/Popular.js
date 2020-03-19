@@ -36,7 +36,7 @@ function RepoGrid({repos}) {
          const { name, owner, html_url, stargazers_count, fork, open_issues_count } = repo;
          const { login, avatar_url } = owner;
         return (
-          <li key={html_url} className="card">
+          <li key={html_url} className="card bg-light">
             <h4 className="header-lg center-text">#{index + 1}</h4>
             <img className="avatar" src={avatar_url} alt="Avatar" />
             <h2 className="center-text">
