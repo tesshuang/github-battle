@@ -39,9 +39,7 @@ export default class Result extends React.Component {
       return <p className="header-lg">Loading</p>
     }
     return(
-      <div >
-        <h3 className='header-lg center-text'>Result</h3>
-        <div className='grid space-around'>
+      <div className='grid space-around'>
         <div className='card bg-light'>
           <h4 className='header-lg center-text'>
             {winner.score === loser.score ? 'Tie' : 'Winner'}
@@ -113,7 +111,6 @@ export default class Result extends React.Component {
               {loser.profile.following.toLocaleString()} followings
             </li>
           </ul>
-        </div>
         </div>
       </div>
     )
