@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FaUserFriends, FaFighterJet, FaTrophy, FaTimesCircle } from 'react-icons/fa'
+import Result from './Result'
 
 function Instruction() {
   return (
@@ -109,11 +110,13 @@ export default class Battle extends React.Component {
 
     this.state = {
       playerOne: null,
-      playerTwo: null
+      playerTwo: null,
+      show: false
     }
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleReset = this.handleReset.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleReset = this.handleReset.bind(this)
+    this.showResult = this.showResult.bind(this)
   }
 
   handleSubmit(id, player) {
@@ -127,36 +130,57 @@ export default class Battle extends React.Component {
       [id]: null
     })
   }
+
+  showResult() {
+    this.setState({
+      show: true
+    })
+  }
+
   render() {
-    const { playerOne, playerTwo } = this.state
+    const { playerOne, playerTwo, show } = this.state
 
     return(
       <React.Fragment>
-        <Instruction />
-        <div className='player-container'>
-          <h1 className='center-text header-lg'>Players</h1>
-          <div className='row space-around'>
-            {!playerOne ?
-              <PlayerInput 
-                lable='Player One' 
-                onSubmit={(player)=>this.handleSubmit('playerOne', player)}/>
-              : <PlayerReview 
-                  username={this.state.playerOne}
-                  lable='Player One'
-                  onReset={()=> this.handleReset('playerOne')}/>
-            }
-            {!playerTwo ? 
-              <PlayerInput 
-                lable='Player Two' 
-                onSubmit={(player)=>this.handleSubmit('playerTwo', player)}/>
+
+        {!show ? 
+        <React.Fragment>
+          <Instruction />
+          <div className='player-container'>
+            <h1 className='center-text header-lg'>Players</h1>
+            <div className='row space-around'>
+              {!playerOne ?
+                <PlayerInput 
+                  lable='Player One' 
+                  onSubmit={(player)=>this.handleSubmit('playerOne', player)}/>
                 : <PlayerReview 
-                  username={this.state.playerTwo}
-                  lable='Player Two'
-                  onReset={()=> this.handleReset('playerTwo')} />
+                    username={this.state.playerOne}
+                    lable='Player One'
+                    onReset={()=> this.handleReset('playerOne')}/>
               }
+              {!playerTwo ? 
+                <PlayerInput 
+                  lable='Player Two' 
+                  onSubmit={(player)=>this.handleSubmit('playerTwo', player)}/>
+                  : <PlayerReview 
+                    username={this.state.playerTwo}
+                    lable='Player Two'
+                    onReset={()=> this.handleReset('playerTwo')} />
+              }
+            </div>
+            {playerOne && playerTwo && (
+                <button 
+                  className='btn dark-btn container-sm'
+                  onClick={this.showResult}>
+                  Battle
+                </button>
+              )}
           </div>
-          
-        </div>
+          </React.Fragment>
+          : <Result />
+        }
+
+        
        
       </React.Fragment>
     )
