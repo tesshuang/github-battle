@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { fetchPopular } from '../utils/fetchPopular'
+import { fetchPopular } from '../utils/api'
 import { FaUser, FaStar, FaCodeBranch, FaExclamationCircle, FaCode } from "react-icons/fa"
 
 
