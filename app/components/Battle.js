@@ -116,7 +116,6 @@ export default class Battle extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleReset = this.handleReset.bind(this)
-    // this.showResult = this.showResult.bind(this)
   }
 
   handleSubmit(id, player) {
@@ -130,12 +129,6 @@ export default class Battle extends React.Component {
       [id]: null
     })
   }
-
-  // showResult() {
-  //   this.setState({
-  //     show: true
-  //   })
-  // }
 
   render() {
     const { playerOne, playerTwo, show } = this.state
