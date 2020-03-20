@@ -1,7 +1,43 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { battle } from '../utils/api'
 import { FaUsers, FaCompass, FaBriefcase, FaUserFriends, FaCode, FaUser } from "react-icons/fa"
+import Card from './Card'
 
+function ProfileList ({profile}) {
+  return (
+    <ul className="card-list">
+    <li>
+      <FaUser color="orange" size={22} />
+        {profile.name}
+    </li>
+    { profile.location && (
+      <li>
+        <FaCompass color='salmon' size={22} />
+        {profile.location}
+      </li>
+    )}
+    { profile.company && (
+      <li>
+        <FaBriefcase color='brown' size={22} />
+        {profile.company}
+      </li>
+    )}
+    <li>
+      <FaUsers color="yellow" size={22} />
+      {profile.followers.toLocaleString()} followers
+    </li>
+    <li>
+      <FaUserFriends color="pink" size={22} />
+      {profile.following.toLocaleString()} followings
+    </li>
+  </ul>
+  )
+}
+
+ProfileList.propTypes = {
+  profile: PropTypes.object.isRequired
+}
 export default class Result extends React.Component {
   constructor(props) {
     super(props)
@@ -40,78 +76,24 @@ export default class Result extends React.Component {
     }
     return(
       <div className='grid space-around'>
-        <div className='card bg-light'>
-          <h4 className='header-lg center-text'>
-            {winner.score === loser.score ? 'Tie' : 'Winner'}
-          </h4>
-          <img class='avatar' src={winner.profile.avatar_url} alt={`Avatart for ${winner.profile.login}`}/>
-          <h4 class='center-text'>Score: {winner.score}</h4>
-          <h2 className="center-text">
-            <a className="link" href={winner.profile.html_url}>{winner.profile.name}</a>
-          </h2>
-          <ul className="card-list">
-            <li>
-              <FaUser color="orange" size={22} />
-                {winner.profile.name}
-            </li>
-            { winner.profile.location && (
-              <li>
-                <FaCompass color='salmon' size={22} />
-                {winner.profile.location}
-              </li>
-            )}
-            { winner.profile.company && (
-              <li>
-                <FaBriefcase color='brown' size={22} />
-                {winner.profile.company}
-              </li>
-            )}
-            <li>
-              <FaUsers color="yellow" size={22} />
-              {winner.profile.followers.toLocaleString()} followers
-            </li>
-            <li>
-              <FaUserFriends color="pink" size={22} />
-              {winner.profile.following.toLocaleString()} followings
-            </li>
-          </ul>
-        </div>
-        <div className='card bg-light'>
-          <h4 className='header-lg center-text'>
-            {loser.score === loser.score ? 'Tie' : 'Loser'}
-          </h4>
-          <img class='avatar' src={loser.profile.avatar_url} alt={`Avatart for ${loser.profile.login}`}/>
-          <h4 class='center-text'>Score: {loser.score}</h4>
-          <h2 className="center-text">
-            <a className="link" href={loser.profile.html_url}>{loser.profile.name}</a>
-          </h2>
-          <ul className="card-list">
-            <li>
-              <FaUser color="orange" size={22} />
-                {loser.profile.name}
-            </li>
-            { loser.profile.location && (
-              <li>
-                <FaCompass color='salmon' size={22} />
-                {loser.profile.location}
-              </li>
-            )}
-            { loser.profile.company && (
-              <li>
-                <FaBriefcase color='brown' size={22} />
-                {loser.profile.company}
-              </li>
-            )}
-            <li>
-              <FaUsers color="yellow" size={22} />
-              {loser.profile.followers.toLocaleString()} followers
-            </li>
-            <li>
-              <FaUserFriends color="pink" size={22} />
-              {loser.profile.following.toLocaleString()} followings
-            </li>
-          </ul>
-        </div>
+        <Card 
+          header={winner.score === loser.score ? 'Tie' : 'Winner'}
+          subheader={`Score: ${winner.score}`}
+          avatar={winner.profile.avatar_url}
+          name={winner.profile.login}
+          href={winner.profile.html_url}
+        >
+          <ProfileList profile={winner.profile} />
+        </Card>
+        <Card
+          header={winner.score === loser.score ? 'Tie' : 'Loser'}
+          subheader={`Score: ${loser.score}`}
+          avatar={loser.profile.avatar_url}
+          name={loser.profile.login}
+          href={loser.profile.html_url}
+        >
+          <ProfileList profile={loser.profile} />
+        </Card>
       </div>
     )
   }
