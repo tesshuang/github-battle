@@ -25,7 +25,7 @@ function getRepos(username) {
       if(repos.message) {
         throw new Error(getErrorMsg(repos.message, username))
       }
-      console.log(repos)
+
       return repos
     })
 }
@@ -35,7 +35,6 @@ function getStarCount(repos) {
 }
 
 function calculateScore(followers, repos) {
-  console.log(getStarCount(repos))
   return (followers * 3 ) + getStarCount(repos)
 }
 function getUserData(player) {
