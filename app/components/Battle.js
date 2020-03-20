@@ -1,6 +1,6 @@
 import React from 'react'
-import PropsType from 'prop-types'
-import { FaUserFriends, FaFighterJet, FaTrophy } from 'react-icons/fa'
+import PropTypes from 'prop-types'
+import { FaUserFriends, FaFighterJet, FaTrophy, FaTimesCircle } from 'react-icons/fa'
 
 function Instruction() {
   return (
@@ -75,10 +75,33 @@ class PlayerInput extends React.Component {
   }
 }
 
-PlayerInput.propsType = {
-  label: PropsType.string.isRequired,
-  onSubmit: PropsType.func.isRequired
+PlayerInput.propTypes = {
+  lable: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired
 } 
+
+function PlayerReview({ username, lable, onReset}) {
+  return(
+    <div className='player column'>
+      <h3 className='player-lable'>{lable}</h3>
+      <div className='player-info row'>
+        <img 
+          className='avatar-small' 
+          src={`https://github.com/${username}.png?size=200`} 
+          alt={`Avatar for ${username}`} />
+        <h4>{username}</h4>
+        <FaTimesCircle color='red' size={25} onClick={onReset}/>
+      </div>
+      
+    </div>
+  )
+}
+
+PlayerReview.propTypes = {
+  username: PropTypes.string.isRequired,
+  lable: PropTypes.string.isRequired,
+  onReset: PropTypes.func.isRequired
+}
 
 export default class Battle extends React.Component {
   constructor(props) {
@@ -88,11 +111,20 @@ export default class Battle extends React.Component {
       playerOne: null,
       playerTwo: null
     }
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
 
   handleSubmit(id, player) {
     this.setState({
       [id]: player
+    })
+  }
+
+  handleReset(id) {
+    this.setState({
+      [id]: null
     })
   }
   render() {
@@ -104,14 +136,24 @@ export default class Battle extends React.Component {
         <div className='player-container'>
           <h1 className='center-text header-lg'>Players</h1>
           <div className='row space-around'>
-            {!playerOne && 
+            {!playerOne ?
               <PlayerInput 
                 lable='Player One' 
-                onSubmit={(player)=>this.handleSubmit('playerOne', player)}/>}
-            {!playerTwo && 
+                onSubmit={(player)=>this.handleSubmit('playerOne', player)}/>
+              : <PlayerReview 
+                  username={this.state.playerOne}
+                  lable='Player One'
+                  onReset={()=> this.handleReset('playerOne')}/>
+            }
+            {!playerTwo ? 
               <PlayerInput 
                 lable='Player Two' 
-                onSubmit={(player)=>this.handleSubmit('playerTwo', player)}/>}
+                onSubmit={(player)=>this.handleSubmit('playerTwo', player)}/>
+                : <PlayerReview 
+                  username={this.state.playerTwo}
+                  lable='Player Two'
+                  onReset={()=> this.handleReset('playerTwo')} />
+              }
           </div>
           
         </div>

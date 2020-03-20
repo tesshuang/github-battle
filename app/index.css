@@ -186,3 +186,15 @@ li {
 .player-container {
   margin: 50px 0;
 }
+
+.player-info {
+  justify-content: space-around;
+  align-items: center;
+  background-color: lightgray;
+  padding: 15px;
+}
+
+.avatar-small {
+  width: 60px;
+  border-radius: 50%;
+}
