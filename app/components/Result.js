@@ -75,26 +75,32 @@ export default class Result extends React.Component {
       return <p className="header-lg">Loading</p>
     }
     return(
-      <div className='grid space-around'>
-        <Card 
-          header={winner.score === loser.score ? 'Tie' : 'Winner'}
-          subheader={`Score: ${winner.score}`}
-          avatar={winner.profile.avatar_url}
-          name={winner.profile.login}
-          href={winner.profile.html_url}
-        >
-          <ProfileList profile={winner.profile} />
-        </Card>
-        <Card
-          header={winner.score === loser.score ? 'Tie' : 'Loser'}
-          subheader={`Score: ${loser.score}`}
-          avatar={loser.profile.avatar_url}
-          name={loser.profile.login}
-          href={loser.profile.html_url}
-        >
-          <ProfileList profile={loser.profile} />
-        </Card>
-      </div>
+      <React.Fragment>
+        <div className='grid space-around'>
+          <Card 
+            header={winner.score === loser.score ? 'Tie' : 'Winner'}
+            subheader={`Score: ${winner.score}`}
+            avatar={winner.profile.avatar_url}
+            name={winner.profile.login}
+            href={winner.profile.html_url}
+          >
+            <ProfileList profile={winner.profile} />
+          </Card>
+          <Card
+            header={winner.score === loser.score ? 'Tie' : 'Loser'}
+            subheader={`Score: ${loser.score}`}
+            avatar={loser.profile.avatar_url}
+            name={loser.profile.login}
+            href={loser.profile.html_url}
+          >
+            <ProfileList profile={loser.profile} />
+          </Card>
+        </div>
+        <button className='btn dark-btn container-sm' onClick={this.props.onReset}>
+            Reset
+          </button>
+      </React.Fragment>
+
     )
   }
 }
