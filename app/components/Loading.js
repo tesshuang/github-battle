@@ -11,7 +11,7 @@ export default class Loading extends React.Component {
   }
   componentDidMount() {
     this.interval = window.setInterval(() => {
-      console.log(this.state.content)
+      // console.log(this.state.content)
 
       if(this.state.content === `${this.state.content}....`) {
         this.setState({
