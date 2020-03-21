@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { battle } from '../utils/api'
 import { FaUsers, FaCompass, FaBriefcase, FaUserFriends, FaCode, FaUser } from "react-icons/fa"
 import Card from './Card'
+import Loading from './Loading'
 
 function ProfileList ({profile}) {
   return (
@@ -72,7 +73,7 @@ export default class Result extends React.Component {
     const { loading, winner, loser } = this.state
     // const { name, avatar_url, login, followers, html_url } = winner
     if(loading) {
-      return <p className="header-lg">Loading</p>
+      return <Loading />
     }
     return(
       <React.Fragment>
