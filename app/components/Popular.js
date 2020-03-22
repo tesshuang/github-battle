@@ -4,6 +4,7 @@ import { fetchPopular } from '../utils/api'
 import { FaUser, FaStar, FaCodeBranch, FaExclamationCircle, FaCode } from "react-icons/fa"
 import Card from './Card'
 import Loading from './Loading'
+import Tooltip from './Tooltip'
 
 function LanguageNav({ selected, onUpdateLanguage}) {
   const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python']
@@ -46,10 +47,12 @@ function RepoGrid({repos}) {
             >
               <ul className="card-list">
                 <li>
-                  <FaUser color="orange" size={22} />
-                  <a href={html_url}>
-                    {login}
-                  </a>
+                  <Tooltip text='Github username'>
+                    <FaUser color="orange" size={22} />
+                    <a href={html_url}>
+                      {login}
+                    </a>
+                  </Tooltip>
                 </li>
                 <li>
                   <FaStar color="yellow" size={22} />
