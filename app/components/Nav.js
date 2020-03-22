@@ -6,7 +6,7 @@ export default class Nav extends React.Component {
     return (
       <ThemeConsumer>
         {({ theme, toggleTheme }) => {
-          console.log(toggleTheme)
+          // console.log(toggleTheme)
           return(
             <nav>
               <button 
