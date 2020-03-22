@@ -13,18 +13,20 @@ class App extends React.Component {
     this.state = {
       theme: 'light',
       toggleTheme: () => {
-        this.setState(({ theme }) => {
+        this.setState(({ theme }) => ({
           theme: theme === 'light' ? 'dark' : 'light'
-        })
+        }))
       }
     }
   }
   render() {
     return (
       <ThemeProvider value={this.state}>
-        <div className="container">
-          <Nav />
-          <Battle />
+        <div className={this.state.theme}> 
+          <div className="container">
+            <Nav />
+            <Battle />
+          </div>
         </div>
       </ThemeProvider>
     )

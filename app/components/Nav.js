@@ -10,7 +10,8 @@ export default class Nav extends React.Component {
           return(
             <nav>
               <button 
-                className='btn'
+                style={{fontSize: 30}}
+                className='btn-clear'
                 onClick={toggleTheme}>
                   {theme === 'light' ? '🔦' : '💡'}
               </button>

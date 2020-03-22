@@ -13,7 +13,10 @@ body {
   margin: 0 auto;
   padding: 50px;
 }
-
+.dark {
+  color: rgb(194, 194, 194);
+  background-color: rgb(49, 49, 49);
+}
 .container-sm {
   width: 80%;
   margin: 0 auto;
