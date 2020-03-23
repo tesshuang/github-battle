@@ -46,6 +46,7 @@ li {
   font-size: 16px;
   text-decoration: none;
   color: inherit;
+  margin: 0 10px;
 }
 
 .grid {
@@ -55,6 +56,10 @@ li {
 
 .space-around {
   justify-content: center;
+}
+
+.space-between {
+  justify-content: space-between;
 }
 
 .bg-light {

@@ -5,7 +5,8 @@ module.exports = {
   entry: './app/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle_index.js'
+    filename: 'bundle_index.js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -24,5 +25,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'app/index.html'
     })
-  ]
+  ],
+  devServer: {
+    historyApiFallback: true
+  }
 }
