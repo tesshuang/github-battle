@@ -127,7 +127,7 @@ export default class Popular extends React.Component {
 
   render() {
     const { selectedLanguage, repo, error } = this.state;
-    // console.log(repo[selectedLanguage]);
+    console.log(this.props);
     return(
       <React.Fragment>
         <LanguageNav 
