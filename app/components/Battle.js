@@ -142,20 +142,8 @@ export default class Battle extends React.Component {
   }
 
   render() {
-    const { playerOne, playerTwo, show } = this.state
+    const { playerOne, playerTwo } = this.state
 
-    // if (show) {
-    //   return(
-    //     <Result 
-    //       playerOne={playerOne} 
-    //       playerTwo={playerTwo}
-    //       onReset={() => this.setState({
-    //         playerOne: null,
-    //         playerTwo: null,
-    //         show: false
-    //       })}/>
-    //   )
-    // }
     return(
       <React.Fragment>
         <Instruction />

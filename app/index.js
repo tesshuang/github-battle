@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom'
 import Popular from './components/Popular'
 import Battle from './components/Battle'
 import Result from './components/Result'
-
+import Unknown from './components/Unknown'
 import './index.css'
 import { ThemeProvider } from './context/theme'
 import Nav from './components/Nav'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 class App extends React.Component {
   constructor(props) {
@@ -29,9 +29,12 @@ class App extends React.Component {
           <div className={this.state.theme}> 
             <div className="container">
               <Nav />
-              <Route exact path='/' component={Popular} />
-              <Route exact path='/battle' component={Battle} />
-              <Route path='/battle/result' component={Result} />
+              <Switch>
+                <Route exact path='/' component={Popular} />
+                <Route exact path='/battle' component={Battle} />
+                <Route path='/battle/result' component={Result} />
+                <Route component={Unknown} />
+              </Switch>
             </div>
           </div>
         </ThemeProvider>
