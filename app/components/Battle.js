@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { FaUserFriends, FaFighterJet, FaTrophy, FaTimesCircle } from 'react-icons/fa'
 import Result from './Result'
 import { ThemeConsumer } from '../context/theme'
+import { Link } from 'react-router-dom'
 
 function Instruction() {
   return (
@@ -122,7 +123,6 @@ export default class Battle extends React.Component {
     this.state = {
       playerOne: null,
       playerTwo: null,
-      show: false
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -144,18 +144,18 @@ export default class Battle extends React.Component {
   render() {
     const { playerOne, playerTwo, show } = this.state
 
-    if (show) {
-      return(
-        <Result 
-          playerOne={playerOne} 
-          playerTwo={playerTwo}
-          onReset={() => this.setState({
-            playerOne: null,
-            playerTwo: null,
-            show: false
-          })}/>
-      )
-    }
+    // if (show) {
+    //   return(
+    //     <Result 
+    //       playerOne={playerOne} 
+    //       playerTwo={playerTwo}
+    //       onReset={() => this.setState({
+    //         playerOne: null,
+    //         playerTwo: null,
+    //         show: false
+    //       })}/>
+    //   )
+    // }
     return(
       <React.Fragment>
         <Instruction />
@@ -182,11 +182,14 @@ export default class Battle extends React.Component {
             }
           </div>
           {playerOne && playerTwo && (
-              <button 
+              <Link 
                 className='btn dark-btn container-sm'
-                onClick={() => this.setState({ show: true })}>
+                to={{
+                  pathname: '/battle/result',
+                  search: `?playerOne=${playerOne}&playerTwo=${playerTwo}`,
+                }}>
                 Battle
-              </button>
+              </Link>
             )}
         </div>
       </React.Fragment>
