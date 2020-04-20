@@ -30,61 +30,43 @@ function Instruction() {
   )
 }
 
-class PlayerInput extends React.Component {
-  constructor(props) {
-    super(props)
+function PlayerInput ({ onSubmit, lable }) {
+  const [username, setUsername] = React.useState('')
+  const { theme } = React.useContext(ThemeContext)
 
-    this.state = {
-      username: ''
-    }
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault()
 
-    this.props.onSubmit(this.state.username);
+    onSubmit(username);
   }
 
-  handleChange(e) {
-    this.setState({
-      username: e.target.value
-    })
-  }
-  render() {
-    return(
-      <ThemeContext.Consumer>
-        {({ theme }) => (
-          <form className="column player" onSubmit={this.handleSubmit}>
-          <label className='player-lable' htmlFor='username'>
-            {this.props.lable}
-          </label>
-          <div className="row">
-            <input 
-              type='text'
-              id='username'
-              className={`player-input input-${theme}`}
-              value={this.state.value}
-              placeholder='Github user'
-              onChange={this.handleChange}
-            />
-            <button
-              className={`btn ${theme === 'light' ? 'dark-btn' : 'light-btn'}`}
-              type='submit'
-              disabled={!this.state.username}
-            >
-              Submit
-            </button>
-          </div>
-        </form>
-        )}
-      </ThemeContext.Consumer>
+  const handleChange = (e) => setUsername(e.target.value)
 
-    )
-  }
+  return(
+    <form className="column player" onSubmit={handleSubmit}>
+      <label className='player-lable' htmlFor='username'>
+        {lable}
+      </label>
+      <div className="row">
+        <input 
+          type='text'
+          id='username'
+          className={`player-input input-${theme}`}
+          placeholder='Github user'
+          onChange={handleChange}
+        />
+        <button
+          className={`btn ${theme === 'light' ? 'dark-btn' : 'light-btn'}`}
+          type='submit'
+          disabled={!username}
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  )
 }
+
 
 PlayerInput.propTypes = {
   lable: PropTypes.string.isRequired,
