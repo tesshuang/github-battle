@@ -1,39 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default class Loading extends React.Component {
-  constructor(props) {
-    super(props);
+export default function Loading ({ text, speed }) {
+  const [content, setContent ] = React.useState(text)
 
-    this.state = {
-      content: this.props.text
-    }
-  }
-  componentDidMount() {
-    this.interval = window.setInterval(() => {
-      // console.log(this.state.content)
-
-      if(this.state.content === `${this.state.content}....`) {
-        this.setState({
-          content: this.props.text
-        })
+  React.useEffect(() => {
+    const id = window.setInterval(() => {
+      if (content === `${content}....`) {
+        setContent(text)
       }
-      this.setState(({content}) => ({ content: content + '.'}))
-    },this.props.speed)
+      setContent((c) => `${c}.`)
+    }, speed)
+    return () => window.clearInterval(id)
+  }, [text, speed])
+
+  const style = {
+    textAlign: 'center',
+    fontSize: '26px',
+    fontWeight: '700'
   }
-  componentWillUnmount() {
-    window.clearInterval(this.interval)
-  }
-  render(){
-    const style = {
-      textAlign: 'center',
-      fontSize: '26px',
-      fontWeight: '700'
-    }
-    return(
-      <p style={style}>{this.state.content}</p>
-    )
-  }
+  return(
+    <p style={style}>{content}</p>
+  )
 }
 
 Loading.propTypes = {
