@@ -6,28 +6,26 @@ import ThemeContext from '../context/theme'
 import { Link } from 'react-router-dom'
 
 function Instruction() {
+  const { theme } = React.useContext(ThemeContext)
+
   return (
-    <ThemeContext.Consumer>
-      {({ theme }) => (
-        <div className='instruction-container'>
-        <h1 className='center-text header-lg'>Instruction</h1>
-        <ol className='container-sm center-text grid battle-instruction'>
-          <li>
-              <h4 className='header-md'>Enter two Github User</h4>
-              <FaUserFriends className={`bg-${theme}`} color='orange' size={100} />
-          </li>
-          <li>
-              <h4 className='header-md'>Battle</h4>
-              <FaFighterJet className={`bg-${theme}`} color='grey' size={100} />
-          </li>
-          <li>
-              <h4 className='header-md'>See the Winner</h4>
-              <FaTrophy className={`bg-${theme}`} color='yellow' size={100} />
-          </li>
-        </ol>
-      </div>
-      )}
-    </ThemeContext.Consumer>
+    <div className='instruction-container'>
+      <h1 className='center-text header-lg'>Instruction</h1>
+      <ol className='container-sm center-text grid battle-instruction'>
+        <li>
+            <h4 className='header-md'>Enter two Github User</h4>
+            <FaUserFriends className={`bg-${theme}`} color='orange' size={100} />
+        </li>
+        <li>
+            <h4 className='header-md'>Battle</h4>
+            <FaFighterJet className={`bg-${theme}`} color='grey' size={100} />
+        </li>
+        <li>
+            <h4 className='header-md'>See the Winner</h4>
+            <FaTrophy className={`bg-${theme}`} color='yellow' size={100} />
+        </li>
+      </ol>
+    </div>
 
   )
 }
@@ -57,7 +55,7 @@ class PlayerInput extends React.Component {
   }
   render() {
     return(
-      <ThemeConsumer>
+      <ThemeContext.Consumer>
         {({ theme }) => (
           <form className="column player" onSubmit={this.handleSubmit}>
           <label className='player-lable' htmlFor='username'>
@@ -82,7 +80,7 @@ class PlayerInput extends React.Component {
           </div>
         </form>
         )}
-      </ThemeConsumer>
+      </ThemeContext.Consumer>
 
     )
   }
