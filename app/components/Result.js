@@ -46,71 +46,66 @@ function ProfileList ({profile}) {
 ProfileList.propTypes = {
   profile: PropTypes.object.isRequired
 }
-export default class Result extends React.Component {
-  constructor(props) {
-    super(props)
+export default function Result () {
+  const [winner, setWinner] = React.useState(null)
+  const [loser, setLoser] = React.useState(null)
+  const [error, setError] = React.useState(null)
+  const [loading, setLoading] = React.useState(true)
 
-    this.state = {
-      winner: null,
-      loser: null, 
-      error: null,
-      loading: true
-    }
-  }
-  componentDidMount(){
-    const { playerOne, playerTwo } = queryString.parse(this.props.location.search)
+  React.useEffect(() => {
+    const { playerOne, playerTwo } = queryString.parse(location.search)
 
     battle([ playerOne, playerTwo])
       .then((player) => {
         console.log('data: ', player)
-        this.setState({
-          loading: false,
-          winner: player[0],
-          loser: player[1],
-          error:null
-        })
-      }).catch(({ message }) => {
-        this.setState({
-          error: message,
-          loading: false
-        })
+        setWinner(player[0])
+        setLoser(player[1])
+        setLoading(false)
+        setError(null)
       })
-  }
-  render() {
-    const { loading, winner, loser } = this.state
-    // const { name, avatar_url, login, followers, html_url } = winner
-    if(loading) {
-      return <Loading />
-    }
-    return(
-      <React.Fragment>
-        <div className='grid space-around'>
-          <Card 
-            header={winner.score === loser.score ? 'Tie' : 'Winner'}
-            subheader={`Score: ${winner.score}`}
-            avatar={winner.profile.avatar_url}
-            name={winner.profile.login}
-            href={winner.profile.html_url}
-          >
-            <ProfileList profile={winner.profile} />
-          </Card>
-          <Card
-            header={winner.score === loser.score ? 'Tie' : 'Loser'}
-            subheader={`Score: ${loser.score}`}
-            avatar={loser.profile.avatar_url}
-            name={loser.profile.login}
-            href={loser.profile.html_url}
-          >
-            <ProfileList profile={loser.profile} />
-          </Card>
-        </div>
-        <Link 
-          className='btn dark-btn container-sm' 
-          to='/battle'>
-            Reset
-          </Link>
-      </React.Fragment>
+      .catch(({ message }) => {
+        setLoading(false)
+        setError(message)
+      })
+  }, [])
 
-    )
+
+  if(loading) {
+    return <Loading />
   }
+  if(error) {
+    return <p>{error}</p>
+  }
+  // console.log(winner)
+  
+  return(
+    <React.Fragment>
+      <div className='grid space-around'>
+        <Card 
+          header={winner.score === loser.score ? 'Tie' : 'Winner'}
+          subheader={`Score: ${winner.score}`}
+          avatar={winner.profile.avatar_url}
+          name={winner.profile.login}
+          href={winner.profile.html_url}
+        >
+          <ProfileList profile={winner.profile} />
+        </Card>
+        <Card
+          header={winner.score === loser.score ? 'Tie' : 'Loser'}
+          subheader={`Score: ${loser.score}`}
+          avatar={loser.profile.avatar_url}
+          name={loser.profile.login}
+          href={loser.profile.html_url}
+        >
+          <ProfileList profile={loser.profile} />
+        </Card>
+      </div>
+      <Link 
+        className='btn dark-btn container-sm' 
+        to='/battle'>
+          Reset
+        </Link>
+    </React.Fragment>
+
+  )
 }
