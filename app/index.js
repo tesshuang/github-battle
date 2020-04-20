@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import { ThemeProvider } from './context/theme'
+import ThemeContext from './context/theme'
 import Nav from './components/Nav'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Loading from './components/Loading'
@@ -14,9 +14,9 @@ function App () {
   const [theme, setTheme] = React.useState('light')
 
   const toggleTheme = () => {
-    setTheme(( theme ) => ({
-      theme: theme === 'light' ? 'dark' : 'light'
-    }))
+    setTheme(( theme ) => {
+      return theme === 'light' ? 'dark' : 'light'
+    })
   }
 
   const state = React.useMemo(() => ({
@@ -26,7 +26,7 @@ function App () {
 
   return (
     <Router>
-      <ThemeProvider value={state}>
+      <ThemeContext.Provider value={state}>
         <div className={theme}> 
           <div className="container">
             <Nav />
@@ -40,7 +40,7 @@ function App () {
             </React.Suspense>
           </div>
         </div>
-      </ThemeProvider>
+      </ThemeContext.Provider>
     </Router>
   )
 }

@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { FaUserFriends, FaFighterJet, FaTrophy, FaTimesCircle } from 'react-icons/fa'
 import Result from './Result'
-import { ThemeConsumer } from '../context/theme'
+import ThemeContext from '../context/theme'
 import { Link } from 'react-router-dom'
 
 function Instruction() {
   return (
-    <ThemeConsumer>
+    <ThemeContext.Consumer>
       {({ theme }) => (
         <div className='instruction-container'>
         <h1 className='center-text header-lg'>Instruction</h1>
@@ -27,7 +27,7 @@ function Instruction() {
         </ol>
       </div>
       )}
-    </ThemeConsumer>
+    </ThemeContext.Consumer>
 
   )
 }
