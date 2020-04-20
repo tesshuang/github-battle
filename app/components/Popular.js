@@ -49,7 +49,7 @@ function RepoGrid({repos}) {
                 <li>
                   <Tooltip text='Github username'>
                     <FaUser color="orange" size={22} />
-                    <a href={html_url}>
+                    <a href={html_url} target='_blank'>
                       {login}
                     </a>
                   </Tooltip>
@@ -78,66 +78,46 @@ function RepoGrid({repos}) {
 RepoGrid.protoTypes = {
   repos: PropTypes.array.isRequired
 }
-export default class Popular extends React.Component {
-  constructor(props) {
-    super(props);
+export default function Popular () {
+  const [selectedLanguage, setSeletedLanguage] = React.useState('All')
+  const [repo, setRepo] = React.useState({})
+  const [error, setError] = React.useState(null)
 
-    this.state = {
-      selectedLanguage: 'All',
-      repo: {},
-      error: null,
-    }
+  React.useEffect(() => {
+    updateLanguage(selectedLanguage)
+  },[selectedLanguage])
+  const updateLanguage = (selectedLanguage) => {
 
-    this.updateLanguage = this.updateLanguage.bind(this);
-    this.isLoading = this.isLoading.bind(this);
-  }
-  componentDidMount() {
-    this.updateLanguage(this.state.selectedLanguage);
-  }
-  updateLanguage(selectedLanguage) {
-    // console.log(selectedLanguage);
-    this.setState({
-      selectedLanguage,
-      error: null,
-    })
+    setSeletedLanguage(selectedLanguage)
+    setError(null)
 
-    if (!this.state.repo[selectedLanguage]) {
+    console.log(repo)
+    if (!repo[selectedLanguage]) {
       fetchPopular(selectedLanguage)
-        .then((data) => this.setState(({repo}) => ({
-          repo: {
-            ...repo,
-            [selectedLanguage]: data,
-          }
-        }))
-        )
+        .then((data) => setRepo((repo) => ({
+          ...repo,
+          [selectedLanguage]: data,
+        })))
         .catch((err) => {
           console.log('Error fetching data: ', err);
-          this.setState({
-            error: 'There is an error fetching data.'
-          })
+          setError('There is an error fetching data.')
         })
     }
 
   }
-  isLoading() {
-    const { selectedLanguage, repo, error } = this.state;
-
+  const isLoading = () => {
     return !repo[selectedLanguage] && error === null
   }
 
-  render() {
-    const { selectedLanguage, repo, error } = this.state;
-    console.log(this.props);
-    return(
-      <React.Fragment>
-        <LanguageNav 
-          selected={selectedLanguage}
-          onUpdateLanguage={this.updateLanguage}
-        />
-        {this.isLoading() && <Loading text='Fetching Data' />}
-        {error && <p>{error}</p>}
-        {repo[selectedLanguage] && <RepoGrid repos={repo[selectedLanguage]}/>}
-      </React.Fragment>
-    )
-  }
+  return(
+    <React.Fragment>
+      <LanguageNav 
+        selected={selectedLanguage}
+        onUpdateLanguage={updateLanguage}
+      />
+      {isLoading() && <Loading text='Fetching Data' />}
+      {error && <p>{error}</p>}
+      {repo[selectedLanguage] && <RepoGrid repos={repo[selectedLanguage]}/>}
+    </React.Fragment>
+  )
 }
