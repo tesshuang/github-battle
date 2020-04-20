@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Hover from './Hover'
 
 const styles = {
   container: {
@@ -23,17 +22,27 @@ const styles = {
     fontSize: '14px',
   }
 }
+function useHover() {
+  const [hover, setHover] = React.useState(false)
+
+  const mouseOver = () => setHover(true)
+  const mouseOut = () => setHover(false)
+
+  const attr = {
+    onMouseOut: mouseOut,
+    onMouseOver: mouseOver
+  }
+
+  return [hover, attr]
+}
 
 export default function Tooltip({text, children}) {
+  const [hover, attr] = useHover()
   return (
-    <Hover>
-      {(hover) => (
-          <div style={styles.container}>
-            {hover === true && <div style={styles.tooltip}>{text}</div>}
-            {children}
-          </div>
-        )}
-    </Hover>
+    <div style={styles.container} {...attr}>
+      {hover === true && <div style={styles.tooltip}>{text}</div>}
+      {children}
+    </div>
 
   )
 }
