@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default function Loading ({ text, speed }) {
+export default function Loading ({ text = 'Loading', speed = 300 }) {
   const [content, setContent ] = React.useState(text)
 
   React.useEffect(() => {
@@ -25,11 +25,6 @@ export default function Loading ({ text, speed }) {
 }
 
 Loading.propTypes = {
-  text: PropTypes.string.isRequired,
-  speed: PropTypes.number.isRequired
-}
-
-Loading.defaultProps = {
-  text: 'Loading',
-  speed: 300
+  text: PropTypes.string,
+  speed: PropTypes.number
 }
