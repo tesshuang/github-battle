@@ -2,8 +2,7 @@ import React from 'react'
 import { ThemeConsumer } from '../context/theme'
 import { NavLink } from 'react-router-dom'
 
-export default class Nav extends React.Component {
-  render() {
+export default function Nav () {
     const activeStyle = {
       color: 'red'
     }
@@ -32,4 +31,3 @@ export default class Nav extends React.Component {
       </ThemeConsumer>
     )
   }
-}
